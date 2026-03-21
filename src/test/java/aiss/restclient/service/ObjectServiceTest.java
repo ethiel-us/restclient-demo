@@ -1,6 +1,6 @@
 package aiss.restclient.service;
 
-import org.junit.jupiter.api.AfterAll;
+import aiss.restclient.service.restfulapi.ObjectService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
