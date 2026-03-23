@@ -15,23 +15,24 @@ import java.util.List;
 
 @SpringBootTest
 class CommitServiceTest {
-
     @Autowired
     CommitService commitService;
 
     @Test
     @DisplayName("Get all commits from a repo")
-    void getAllCommits() throws JsonProcessingException {
+    void getAllCommits() {
         String owner = "spring-projects";
         String repo = "spring-framework";
         List<Commit> commits = commitService.getAllCommits(owner, repo);
-
+        Assertions.assertNotNull(commits, "Commit list is null");
         Assertions.assertFalse(commits.isEmpty(), "Commit list is empty");
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        System.out.println("número de commits del repo " + repo + " : " + commits.size());
 
-        System.out.println(mapper.writeValueAsString(commits));
-
-
+        String owner2 = "octocat";
+        String repo2 = "Hello-World";
+        List<Commit> commits2 = commitService.getAllCommits(owner2, repo2);
+        Assertions.assertNotNull(commits2, "Commit list is null");
+        Assertions.assertFalse(commits2.isEmpty(), "Commit list is empty");
+        System.out.println("número de commits del repo " + repo2 + " : " + commits2.size());
     }
 }
