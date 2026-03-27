@@ -16,24 +16,32 @@ import java.util.List;
 
 @Service
 public class CommitService {
-    private static final String TOKEN = "";
+    private static final String TOKEN = "YOUR TOKEN HERE";
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<Commit> getAllCommits(String owner, String repo) {
-        String uri = "https://api.github.com/repos/" + owner + "/" + repo + "/commits";
+    public List<Commit> getAllCommits(String owner, String repo, Integer numPages,Integer numPerPage) {
+        String baseUri = "https://api.github.com/repos/" + owner + "/" + repo + "/commits";
 
         HttpHeaders header = new HttpHeaders();
-        header.set("Authorization", "Bearer" + TOKEN);
+        header.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<Void> request = new HttpEntity<>(header);
-        ResponseEntity<Commit[]> response = restTemplate.exchange(
-                uri,
-                HttpMethod.GET,
-                request,
-                Commit[].class
-        );
-        if(response.getBody()!=null) return Arrays.asList(response.getBody());
-        return new ArrayList<>();
+
+        List<Commit> commits = new ArrayList<>();
+
+        for(int i=1;i<=numPages;i++) {
+            String uri = baseUri + "?page=" + i + "&per_page=" + numPerPage;
+            ResponseEntity<Commit[]> response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    request,
+                    Commit[].class
+            );
+            if (response.getBody() != null) {
+                commits.addAll(Arrays.asList(response.getBody()));
+            }
+        }
+        return commits;
     }
 }
