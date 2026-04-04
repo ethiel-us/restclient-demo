@@ -1,6 +1,6 @@
 package aiss.restclient.service.github;
 
-
+import aiss.restclient.utils.RESTUtils;
 import aiss.restclient.model.github.Commit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 public class CommitService {
-    private static final String TOKEN = "YOUR TOKEN HERE";
+    private static final String TOKEN = "token";
 
     @Autowired
     private RestTemplate restTemplate;
