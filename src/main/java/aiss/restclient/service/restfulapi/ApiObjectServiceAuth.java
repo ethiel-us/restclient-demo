@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 public class ApiObjectServiceAuth {
-    private static final String API_KEY = "7ea0b4e6-9e5d-4b06-a6f3-f6c4d06385b6";
+    private static final String API_KEY = "<< TOKEN GOES HERE >>";
 
     @Autowired
     RestTemplate restTemplate;
