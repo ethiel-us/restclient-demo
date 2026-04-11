@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class ApiObjectService {
+public class    ApiObjectService {
 
     @Autowired
     RestTemplate restTemplate;
@@ -34,7 +34,7 @@ public class ApiObjectService {
     }
 
     public ApiObject getObjectById(String id) {
-        String url = "https://api.restful-api.dev/objects/" + id;
+    String url = "https://api.restful-api.dev/objects/" + id;
         ResponseEntity<ApiObject> response = restTemplate.exchange(
           url,
           HttpMethod.GET,

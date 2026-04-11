@@ -1,8 +1,7 @@
-package aiss.restclient.service;
+package aiss.restclient.service.restfulapi;
 
 import aiss.restclient.model.restfulapi.ApiObject;
 import aiss.restclient.model.restfulapi.Data;
-import aiss.restclient.service.restfulapi.ApiObjectService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +34,7 @@ class ApiObjectServiceTest {
 
         Assertions.assertNotNull(objects, "Objects list is null");
         Assertions.assertFalse(objects.isEmpty(), "Objects list is empty");
+
         System.out.println(objects);
     }
 
@@ -43,8 +43,10 @@ class ApiObjectServiceTest {
     @DisplayName("GET - Get object by id")
     void getObjectById() {
         ApiObject object = apiObjectService.getObjectById("1");
+
         Assertions.assertNotNull(object, "Object is null");
         Assertions.assertEquals("1", object.getId(), "Object id is not correct");
+
         System.out.println(object);
     }
 
