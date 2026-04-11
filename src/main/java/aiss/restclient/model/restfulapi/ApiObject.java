@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class Object {
+public class ApiObject {
 
     @JsonProperty("id")
     private String id;
@@ -48,7 +48,7 @@ public class Object {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Object.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(ApiObject.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("id");
         sb.append('=');
         sb.append(((this.id == null)?"<null>":this.id));

@@ -1,6 +1,5 @@
 package aiss.restclient.service.github;
 
-import aiss.restclient.utils.RESTUtils;
 import aiss.restclient.model.github.Commit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -9,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import utils.RESTUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,13 +16,13 @@ import java.util.List;
 
 @Service
 public class CommitService {
-    private static final String TOKEN = "token";
+    private static final String TOKEN = "<<TOKEN GOES HERE>>";
 
     @Autowired
     private RestTemplate restTemplate;
 
     public List<Commit> getAllCommits(String owner, String repo, Integer numPages,Integer numPerPage) {
-        String baseUri = "https://api.github.com/repos/" + owner + "/" + repo + "/commits";
+        String uri = "https://api.github.com/repos/" + owner + "/" + repo + "/commits?page=1&per_page=" + numPerPage;
 
         HttpHeaders header = new HttpHeaders();
         header.set("Authorization", "Bearer " + TOKEN);
@@ -30,17 +30,16 @@ public class CommitService {
 
         List<Commit> commits = new ArrayList<>();
 
-        for(int i=1;i<=numPages;i++) {
-            String uri = baseUri + "?page=" + i + "&per_page=" + numPerPage;
+        int pages = 1;
+        while (uri != null && pages <= numPages) {
             ResponseEntity<Commit[]> response = restTemplate.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    request,
-                    Commit[].class
+                    uri, HttpMethod.GET, request, Commit[].class
             );
             if (response.getBody() != null) {
                 commits.addAll(Arrays.asList(response.getBody()));
             }
+            uri = RESTUtils.getNextPageUrl(response.getHeaders());
+            pages++;
         }
         return commits;
     }
